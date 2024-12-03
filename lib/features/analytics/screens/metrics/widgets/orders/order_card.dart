@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../../models/order.dart';
@@ -38,8 +39,13 @@ class OrderCard extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(order.picture),
                     radius: 24,
+                    child: CachedNetworkImage(
+                      imageUrl: order.picture,
+                      progressIndicatorBuilder: (context, url, downloadProgress) =>
+                          CircularProgressIndicator(value: downloadProgress.progress),
+                      errorWidget: (context, url, error) => const Icon(Icons.shopping_bag_outlined),
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
